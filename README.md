@@ -1,4 +1,11 @@
 # YNH Identity Manager
+
+## This is a basic identity manager that leverages the auth-service and a SQLite3 (backend)
+### How do you build this?
+#### you basically build it as a docker container. You can look inside the Dockerfile and see the following:
+
+
+
 ## Your Name Here (YNH)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.

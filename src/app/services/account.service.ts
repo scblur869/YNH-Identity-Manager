@@ -10,7 +10,8 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root'
 })
 export class AccountService {
-  public authServiceUrl = environment.auth_service;
+  // public authServiceUrl = environment.auth_service;
+  public authServiceUrl = environment.Services.auth_service;
   apiVersion = '/api/v1';
   login = '/login';
   refresh = '/refresh';

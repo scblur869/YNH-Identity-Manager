@@ -7,7 +7,8 @@ import { environment } from 'src/environments/environment.prod';
   providedIn: 'root'
 })
 export class RoleService {
-  public authServiceUrl = environment.auth_service;
+  // public authServiceUrl = environment.auth_service;
+  public authServiceUrl = environment.Services.auth_service;
   apiVersion = '/api/v1';
   getRoles = '/role/list';
   newRole = '/role/new';
