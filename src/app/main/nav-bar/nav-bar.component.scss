@@ -1,0 +1,24 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  border-radius: 0px;
+  height: 100px;
+  background: rgb(236, 236, 238);
+
+}
+
+.dt {
+  position: absolute;
+  top: 72px;
+  right: 30px;
+  font-size: .55em;
+}
+
+.incode {
+  position: absolute;
+  top: 72px;
+  right: 30px;
+  font-size: .65em;
+}

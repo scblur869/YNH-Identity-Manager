@@ -1,0 +1,30 @@
+<h1 mat-dialog-title> account data </h1>
+<div mat-dialog-content> <mat-icon>person</mat-icon>
+<form [formGroup]="form">
+<p><mat-form-field>
+  <mat-label>username</mat-label>
+  <input matInput placeholder="Just a placeholder" formControlName="user">
+</mat-form-field></p>
+<p><mat-form-field>
+  <mat-label>display name</mat-label>
+  <input  matInput placeholder="Just a placeholder"  formControlName="displayName">
+</mat-form-field></p>
+
+<p><mat-form-field>
+  <mat-label>email</mat-label>
+  <input  matInput placeholder="Just a placeholder"  formControlName="email">
+</mat-form-field></p>
+
+<p><mat-form-field appearance="fill">
+  <mat-label>roles</mat-label>
+  <mat-select formControlName="role" (selectionChange)="changeRole($event.value)">
+    <mat-option *ngFor="let r of roles" [value]="r.name">{{r.displayname}}</mat-option>
+  </mat-select>
+</mat-form-field></p>
+</form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">cancel &nbsp;<mat-icon>cancel</mat-icon></button>
+  <button mat-button [mat-dialog-close]="data" (click)="save()" cdkFocusInitial>Save &nbsp;<mat-icon>save</mat-icon></button>
+</div>

@@ -1,0 +1,15 @@
+<h1 mat-dialog-title> <mat-icon>security</mat-icon>&nbsp;account activation</h1>
+<div mat-dialog-content>
+<p><mat-form-field  >
+  <mat-label>Set Password</mat-label>
+  <input type="password" matInput placeholder="set the password here" [(ngModel)]="data.pass">
+</mat-form-field></p>
+<p>
+    <mat-checkbox [(ngModel)]="data.isEnabled" [checked]="isEnabled" (change)="toggle($event.checked)"> Enable Account
+    </mat-checkbox>
+</p>
+</div>
+ <div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">cancel &nbsp;<mat-icon>cancel</mat-icon></button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save &nbsp;<mat-icon>save</mat-icon></button>
+</div>

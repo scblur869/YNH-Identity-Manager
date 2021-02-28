@@ -1,4 +1,5 @@
-# AuthUserstoreUi
+# YNH Identity Manager
+## Your Name Here (YNH)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
 

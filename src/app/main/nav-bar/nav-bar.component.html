@@ -1,0 +1,24 @@
+<mat-toolbar [class.mat-elevation-z2]="true">
+  <span style="font-size: 1.25em;"><mat-icon>transform</mat-icon>&nbsp;YNH Identity Manager</span>
+  <span class="spacer"></span>
+<span class="dt">{{currentDate | date:'MMM d, y, h:mm:ss a'}}</span>
+<span class="profile">
+  <button mat-icon-button [matMenuTriggerFor]="profile" aria-label="Login Profile">
+  <mat-icon>person</mat-icon><mat-icon>keyboard_arrow_down</mat-icon>
+</button>
+<mat-menu #profile="matMenu">
+  <button mat-menu-item disabled>
+    <mat-icon>person</mat-icon>
+    <span>{{dn}}</span>
+  </button>
+    <button mat-menu-item disabled>
+    <mat-icon>security</mat-icon>
+    <span>{{role}}</span>
+  </button>
+  <button mat-menu-item (click)="lou()">
+    <mat-icon>arrow_back_ios</mat-icon>
+    <span>log-out</span>
+  </button>
+</mat-menu>
+</span>
+</mat-toolbar>
