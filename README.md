@@ -1,35 +1,66 @@
 # YNH Identity Manager
 
-## This is a basic identity manager that leverages the auth-service and a SQLite3 (backend)
-### How do you build this?
-#### you basically build it as a docker container. You can look inside the Dockerfile and see the following:
-
-
-
 ## Your Name Here (YNH)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+## This is a basic identity manager that leverages the auth-service and a SQLite3 (backend)
 
-## Development server
+## INSTALLATION
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- clone this repository along with the "secure-auth-service" repo
+- build both the auth service and the YNH-Identity-Manager (docker build --tag container-name .)
+- check out the docker-compose.yaml file in the auth-svc dir to match container names on builds
+  - should be the following:
+    - ynhidp    - YNH-Identity-Manager
+    - redis     - redis cache for storing cookies and session uuid
+    - auth-svc  - auth service
 
-## Code scaffolding
+- for example, for the auth service, from the source directory use:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```console
+ docker build --tag auth-svc . --no-cache
+ ```
 
-## Build
+ once completed you may run
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+ ```console
+ docker images
+ ```
 
-## Running unit tests
+ and see the following images
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+ ```console
+auth-svc                                                         latest                                           fd0b2f359f1b   17 hours ago    25MB
+ynhidp                                                           latest                                           6324031f67c8   17 hours ago    23.6MB
+golang                                                           alpine                                           3dae2ccc15b8   3 weeks ago     299MB
+alpine                                                           latest                                           e50c909a8df2   4 weeks ago     5.61MB
+redis                                                            latest                                           621ceef7494a   6 weeks ago     104MB
+```
 
-## Running end-to-end tests
+once you have these you can go back into the directory for the secure-auth-service and run
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```console
+ docker-compose up -d --remove-orphans
+```
 
-## Further help
+and the containers should be up and it should look something like this
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```console
+CONTAINER ID   IMAGE      COMMAND                  CREATED             STATUS             PORTS                            NAMES
+3b828052f7e5   auth-svc   "./auth-svc"             About an hour ago   Up About an hour   0.0.0.0:4000->4000/tcp           idp_svc
+78999392638e   redis      "docker-entrypoint.s…"   About an hour ago   Up About an hour   0.0.0.0:6379->6379/tcp           reddis_cache
+84f5a1d325f7   ynhidp     "/docker-entrypoint.…"   About an hour ago   Up About an hour   80/tcp, 0.0.0.0:8888->8888/tcp   idp_ui
+```
+
+you should then be able to access the ui on port 8888
+
+### default login is admin:admin
+
+## Things to keep in mind
+
+- keep in mind if you delete the admin role you will be locked out of the UI. Only admin role holders can login
+- the sqlite database exist in the data/db folder and has no authentication since its sqlite3
+- you can look in the accounts table to see the default accounts.
+- if you get locked out you can either edit the sqlite table directly or delete the database and restart the auth-svc container
+- only admin role holders can login to the ui. all other accounts are client application accounts for an application ui consuming the auth service
+
+## Enjoy
