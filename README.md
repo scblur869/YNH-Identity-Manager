@@ -2,6 +2,8 @@
 
 ## Your Name Here (YNH)
 
+![alt text](src/assets/idpshot.png)
+
 ## This is a basic identity manager that leverages the auth-service and a SQLite3 (backend)
 
 ## INSTALLATION
