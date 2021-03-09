@@ -1,3 +1,4 @@
+
 import { AccountService } from './../services/account.service';
 import { UserRole } from './../roles.model';
 import { RoleService } from './../services/role.service';
@@ -11,6 +12,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { of } from 'rxjs';
 export interface DialogData {
   user: string;
   pass: string;
@@ -41,6 +43,7 @@ export class UserTableComponent implements AfterViewInit, OnInit {
   public selectedRoles!: string[];
   public display!: string;
   public role!: string;
+  errors!: string;
 
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -154,13 +157,45 @@ export class UserTableComponent implements AfterViewInit, OnInit {
 
 
   updateDS(): void {
-    this.authService.listAccounts().subscribe(r => {
-      this.userList = r;
-      this.dataSource.data = this.userList;
-      this.dataSource.paginator = this.paginator;
-      this.table.dataSource = this.dataSource;
-    });
+    this.authService.listAccounts()
+      .subscribe({
+        next: (r: any) => {
+          if (r) {
+            this.userList = r;
+            this.dataSource.data = this.userList;
+            this.dataSource.paginator = this.paginator;
+            this.table.dataSource = this.dataSource;
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('completed');
+        }
+      });
 
+  }
+
+  test(): any {
+    const updateOb = this.authService.listAccounts();
+    const updateObserver = {
+      next: (r: any) => {
+        if (r) {
+          this.userList = r;
+          this.dataSource.data = this.userList;
+          this.dataSource.paginator = this.paginator;
+          this.table.dataSource = this.dataSource;
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('completed');
+      }
+    };
+    updateOb.subscribe(updateObserver);
   }
 
   removeUser(user: UserModel): void {
