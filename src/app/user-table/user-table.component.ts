@@ -132,52 +132,40 @@ export class UserTableComponent implements AfterViewInit, OnInit {
         height: '350px',
         data: { pass: user.password, isEnabled: user.isenabled }
       });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.dData = result;
-        user.password = this.dData.pass;
-        user.isenabled = this.dData.isEnabled;
-
-        if (this.dData.pass !== '') {
-
+    const SecDialogOb = dialogRef.afterClosed();
+    const setPassOb = this.accountService.setPassword(user);
+    const toggleAcctOb = this.accountService.toggleAccount(user);
+    const SecDialObserver = {
+      next: (result: any) => {
+        if (result) {
+          this.dData = result;
           user.password = this.dData.pass;
-          this.accountService.setPassword(user).subscribe(res => {
-
-          });
-        }
-        this.accountService.toggleAccount(user).subscribe(
-          res => {
-
+          user.isenabled = this.dData.isEnabled;
+          if (this.dData.pass !== '') {
+            user.password = this.dData.pass;
+            const setPassObserver = {
+              next: (res: any) => { },
+              error: (err: any) => {
+                console.log(err);
+              }
+            };
+            setPassOb.subscribe(setPassObserver);
           }
-        );
+          const toggleAcctObserver = {
+            next: (x: any) => { }
+          };
+          toggleAcctOb.subscribe(toggleAcctObserver);
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
       }
-    });
+    };
+    SecDialogOb.subscribe(SecDialObserver);
   }
 
-
+  // newer way to handle obvervable pattern
   updateDS(): void {
-    this.authService.listAccounts()
-      .subscribe({
-        next: (r: any) => {
-          if (r) {
-            this.userList = r;
-            this.dataSource.data = this.userList;
-            this.dataSource.paginator = this.paginator;
-            this.table.dataSource = this.dataSource;
-          }
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-        complete: () => {
-          console.log('completed');
-        }
-      });
-
-  }
-
-  test(): any {
     const updateOb = this.authService.listAccounts();
     const updateObserver = {
       next: (r: any) => {
