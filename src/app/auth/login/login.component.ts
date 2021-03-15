@@ -40,10 +40,11 @@ export class LoginComponent implements OnInit {
         .subscribe((resp: string) => {
           if (resp === 'successful') {
             const details: string = this.cookieService.get('is-logged-in');
-
-            const p = JSON.parse(details);
-            localStorage.setItem('dn', p.display_name.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, ' '));
-            localStorage.setItem('role', p.role.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, ' '));
+            if (details != null) {
+              const p = JSON.parse(details);
+              localStorage.setItem('dn', p.display_name.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, ' '));
+              localStorage.setItem('role', p.role.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, ' '));
+            }
           }
           if ((this.cookieService.check('is-logged-in')) && (localStorage.getItem('role') === 'admin')) {
             this.router.navigate(['app'], {});
