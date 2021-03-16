@@ -2,7 +2,7 @@
 
 ## Your Name Here (YNH)
 
-![caption](src/assets/ynhIDP.gif / GIF)
+![alt text](src/assets/ynhIDP.gif)
 
 ## This is a basic identity manager that leverages the auth-service and a SQLite3 (backend)
 
