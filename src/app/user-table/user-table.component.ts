@@ -141,19 +141,23 @@ export class UserTableComponent implements AfterViewInit, OnInit {
           this.dData = result;
           user.password = this.dData.pass;
           user.isenabled = this.dData.isEnabled;
-          if (this.dData.pass !== '') {
+          if (this.dData.pass == '') {
+            user.password = 'password'
+          } else {
             user.password = this.dData.pass;
+          }
             const setPassObserver = {
               next: (res: any) => { },
               error: (err: any) => {
                 console.log(err);
               }
             };
-            setPassOb.subscribe(setPassObserver);
-          }
+
+
           const toggleAcctObserver = {
             next: (x: any) => { }
           };
+          setPassOb.subscribe(setPassObserver);
           toggleAcctOb.subscribe(toggleAcctObserver);
         }
       },
