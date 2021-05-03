@@ -147,7 +147,9 @@ export class UserTableComponent implements AfterViewInit, OnInit {
             user.password = this.dData.pass;
           }
             const setPassObserver = {
-              next: (res: any) => { },
+              next: (res: any) => {
+                console.log(res);
+               },
               error: (err: any) => {
                 console.log(err);
               }
@@ -155,7 +157,9 @@ export class UserTableComponent implements AfterViewInit, OnInit {
 
 
           const toggleAcctObserver = {
-            next: (x: any) => { }
+            next: (x: any) => {
+              console.log(x);
+             }
           };
           setPassOb.subscribe(setPassObserver);
           toggleAcctOb.subscribe(toggleAcctObserver);
