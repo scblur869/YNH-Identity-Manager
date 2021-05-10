@@ -144,7 +144,9 @@ export class UserTableComponent implements AfterViewInit, OnInit {
         height: '350px',
         data: { pass: user.password, isEnabled: user.isenabled }
       });
+
       dialogRef.afterClosed().subscribe((result: any) => {
+        if ( result ){
         this.dData = result;
         user.password = this.dData.pass;
         user.isenabled = this.dData.isEnabled;
@@ -154,8 +156,10 @@ export class UserTableComponent implements AfterViewInit, OnInit {
           user.password = this.dData.pass;
           this.setPassword(user);
         }
+        this.toggleAccountStatus(user);
+      }
       });
-       this.toggleAccountStatus(user);
+
   }
 
   // newer way to handle obvervable pattern
