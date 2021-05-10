@@ -124,6 +124,18 @@ export class UserTableComponent implements AfterViewInit, OnInit {
     });
   }
 
+  setPassword(user: UserModel): void {
+    this.accountService.setPassword(user).subscribe((result: any) => {
+     console.log(result);
+    });
+  }
+
+  toggleAccountStatus(user: UserModel): void {
+    this.accountService.toggleAccount(user).subscribe((result: any) => {
+      console.log(result);
+     });
+  }
+
   openSecurityDialog(user: UserModel): void {
 
     const dialogRef = this.dialog.open(SecDialogComponent,
@@ -132,44 +144,18 @@ export class UserTableComponent implements AfterViewInit, OnInit {
         height: '350px',
         data: { pass: user.password, isEnabled: user.isenabled }
       });
-    const SecDialogOb = dialogRef.afterClosed();
-    const setPassOb = this.accountService.setPassword(user);
-    const toggleAcctOb = this.accountService.toggleAccount(user);
-    const SecDialObserver = {
-      next: (result: any) => {
-        if (result) {
-          this.dData = result;
+      dialogRef.afterClosed().subscribe((result: any) => {
+        this.dData = result;
+        user.password = this.dData.pass;
+        user.isenabled = this.dData.isEnabled;
+        if (this.dData.pass == '') {
+          user.password = 'password'
+        } else {
           user.password = this.dData.pass;
-          user.isenabled = this.dData.isEnabled;
-          if (this.dData.pass == '') {
-            user.password = 'password'
-          } else {
-            user.password = this.dData.pass;
-          }
-            const setPassObserver = {
-              next: (res: any) => {
-                console.log(res);
-               },
-              error: (err: any) => {
-                console.log(err);
-              }
-            };
-
-
-          const toggleAcctObserver = {
-            next: (x: any) => {
-              console.log(x);
-             }
-          };
-          setPassOb.subscribe(setPassObserver);
-          toggleAcctOb.subscribe(toggleAcctObserver);
+          this.setPassword(user);
         }
-      },
-      error: (err: any) => {
-        console.log(err);
-      }
-    };
-    SecDialogOb.subscribe(SecDialObserver);
+      });
+       this.toggleAccountStatus(user);
   }
 
   // newer way to handle obvervable pattern
