@@ -67,7 +67,7 @@ export class AuthService {
       email: newUser.email,
       displayname: newUser.displayname,
       role: newUser.role,
-      password: newUser.password
+      password: ''
     };
     return this.http.post(authUrl, body, { headers });
   }
