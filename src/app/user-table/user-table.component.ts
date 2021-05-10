@@ -103,7 +103,7 @@ export class UserTableComponent implements AfterViewInit, OnInit {
       {
         width: '575px',
         height: '620px',
-        data: { user: user.username, pass: user.password, email: user.email, displayName: user.displayname, role: user.role }
+        data: { user: user.username, pass: user.password, email: user.email, displayName: user.displayname, role: user.role, enabled: user.isenabled}
       });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -112,6 +112,7 @@ export class UserTableComponent implements AfterViewInit, OnInit {
         user.username = this.dData.user;
         user.password = this.dData.pass;
         user.email = this.dData.email;
+        user.isenabled = this.dData.isEnabled;
         user.displayname = this.dData.displayName;
         user.role = this.dData.role;
         const x = this.UpdateUser(user)
