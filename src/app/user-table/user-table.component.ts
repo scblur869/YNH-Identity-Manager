@@ -103,7 +103,7 @@ export class UserTableComponent implements AfterViewInit, OnInit {
       {
         width: '575px',
         height: '620px',
-        data: { user: user.username, pass: user.password, email: user.email, displayName: user.displayname, role: user.role, enabled: user.isenabled}
+        data: { user: user.username, pass: user.password, email: user.email, displayName: user.displayname, role: user.role, isEnabled: user.isenabled}
       });
 
     dialogRef.afterClosed().subscribe(result => {
